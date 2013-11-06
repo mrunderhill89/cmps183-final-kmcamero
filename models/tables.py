@@ -52,6 +52,7 @@ db.define_table('Review',
 #
 db.define_table('Project',
                 Field('name', 'string', default = 'Project'),
+                Field('projectOwner', 'reference auth_user', default=auth.user_id),                                
                 Field('shortDesc', 'string', default = ''),
                 Field('longDesc', 'text', default = ''),
                 Field('roles', 'list:reference Role'),
