@@ -5,11 +5,11 @@ projects and letting students, employees, and freelancers create a
 peer-reviewed
 profile of important skills.</p>
 {{if auth.user:}} {{=A('Contacts',
-_href=URL('default','contacts'),_class='btn')}}
-{{=A('Skillset', _href=URL('default', 'skillset'),_class='btn')}}
-{{=A('Projects', _href=URL('default', 'projects'),_class='btn')}}
-{{=A('Reviews', _href=URL('default', 'reviews'),_class='btn')}}
+_href=URL('contacts','index'),_class='btn')}}
+{{=A('Skillset', _href=URL('skillset', 'index'),_class='btn')}}
+{{=A('Projects', _href=URL('projects', 'index'),_class='btn')}}
+{{=A('Reviews', _href=URL('reviews', 'index'),_class='btn')}}
 {{else:}}
 To get started, please log in.
 {{pass}}
-<br><br>{{=IMG(_src='SiteMap.png',_alt='Future Site Map')}}<br>
+<br>Future Site Map:<br>{{=IMG(_src=URL('static/images','SiteMap.png'),_alt='Future Site Map')}}<br>

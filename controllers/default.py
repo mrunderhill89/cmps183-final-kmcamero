@@ -13,63 +13,6 @@
 def index():
     return dict()
 
-def skillset():
-    return dict()
-
-def addSkill():
-    return dict()
-
-def editSkill():
-    return dict()
-"""
-projects: Allows the user to view, add, edit, and delete their own projects.
-    Subpages:
-        addProject
-        editProject
-        deleteProject
-        viewProject
-browseProjects
-"""
-@auth.requires_login()
-def projects():
-    t = db.Project
-    #Get grid of projects owned by user
-    q = (t.projectOwner == auth.user.id)
-    owned = SQLFORM.grid(q
-                    ,searchable = True
-                    ,fields=[t.name, t.shortDesc, t.startDate, t.endDate]
-                    ,csv = False
-                    ,details = False
-                    ,create = False
-                    ,editable = False
-                    ,deletable = False
-                    )
-    return dict(owned = owned)
-
-@auth.requires_login()
-def addProject():
-    return dict()
-
-@auth.requires_login()
-def editProject():
-    return dict()
-
-@auth.requires_login()
-def deleteProject():
-    return dict()
-
-def browseProjects():
-    return dict()
-
-def viewProject():
-    return dict()
-
-def contacts():
-    return dict()
-
-def reviews():
-    return dict()
-
 def user():
     """
     exposes:

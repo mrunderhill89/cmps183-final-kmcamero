@@ -1,0 +1,13 @@
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title></title>
+
+  
+</head><body>
+{{extend 'layout.html'}}
+<h1>Add Contact</h1>
+<h2>How do you know this person?</h2>
+{{=A('By email', _href=URL('contacts','addByEmail'))}}<br>
+{{=A('From a shared project', _href=URL('contacts','addByProject'))}}
+</body></html>

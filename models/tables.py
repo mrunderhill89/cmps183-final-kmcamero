@@ -14,6 +14,8 @@ db.define_table('Skill',
                 Field('accepted', 'boolean', default = False),
                 Field('rejected', 'boolean', default = False)
                 )
+#List ranks and minimum scores for each skill rank.
+skillRanks = {'Learning/Rusty':[-1,1], 'Proficient':[0,2] , 'Expert':[40,3], 'Master':[100,4], 'Grandmaster':[1000,5], 'Super Saiyan':[9001,10]}
 # SkillInstance holds information per-user on what skills the user has.
 # They each contain a reference to the base skill, as well as ranking information.
 #
@@ -26,10 +28,17 @@ db.define_table('Skill',
 db.define_table('SkillInstance',
                 Field('skillOwner', 'reference auth_user', default=auth.user_id),
                 Field('skill', 'reference Skill'),
-                Field('skillRank', 'string', default='Learning/Rusty'),
+                Field('skillRank', requires=IS_IN_SET(skillRanks.keys()), default='Learning/Rusty'),
                 Field('score', 'integer', default = 0),
                 Field('reviews', 'reference Review')
                 )
+
+db.SkillInstance.skillRank.label = "Rank"
+
+def getSkillName(name, row):
+    return db.Skill(name).name or 'Unrecognized'
+
+db.SkillInstance.skill.represent = getSkillName
 # Reviews determine a user's score in a particular skill.
 #
 # sender - The person sending the review
@@ -55,10 +64,28 @@ db.define_table('Project',
                 Field('projectOwner', 'reference auth_user', default=auth.user_id),                                
                 Field('shortDesc', 'string', default = ''),
                 Field('longDesc', 'text', default = ''),
-                Field('roles', 'list:reference Role'),
-                Field('startDate', 'datetime'),
-                Field('endDate', 'datetime')
+                Field('roles', 'list:reference Role', default = []),
+                Field('projectActive', 'boolean', default = True)
+                )
+db.Project.projectOwner.label = "Owner"
+db.Project.shortDesc.label = "Short Description"
+db.Project.longDesc.label = "Long Description"
+db.Project.projectActive.label = "Active"
+
+db.define_table('Contact',
+                Field('fromUser', 'reference auth_user', default=auth.user_id),
+                Field('toUser', 'reference auth_user', default = None),
+                Field('reviews', 'list:reference Review', default = []),
+                Field('relationship', 'string', default='Acquaintance'),
+                Field('accepted', 'boolean', default = False),
+                Field('blocked', 'boolean', default = False),
+                Field('reciprocal', 'reference Contact', default = None)                
                 )
 
-db.define_table('Role'
+db.define_table('Role',
+                Field('name', 'string', default = 'Role'),
+                Field('project', 'reference Project'),                                
+                Field('applicant', 'reference auth_user', default=None),                                
+                Field('shortDesc', 'string', default = ''),
+                Field('longDesc', 'text', default = ''),
                 )
