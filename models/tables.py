@@ -59,18 +59,34 @@ db.define_table('Review',
 
 # Data for handling projects and roles.
 #
+def getTotalRoles(r):
+    roles = db.Role
+    q = (roles.project == r)
+    return db(q).count()
+
+def getFilledRoles(r):
+    roles = db.Role
+    q = ((roles.project == r) & (roles.applicant != None))
+    return db(q).count()
+
 db.define_table('Project',
                 Field('name', 'string', default = 'Project'),
                 Field('projectOwner', 'reference auth_user', default=auth.user_id),                                
                 Field('shortDesc', 'string', default = ''),
                 Field('longDesc', 'text', default = ''),
                 Field('roles', 'list:reference Role', default = []),
-                Field('projectActive', 'boolean', default = True)
+                Field('projectActive', 'boolean', default = True),
+                Field('unlisted', 'boolean', default = False)
                 )
+db.Project.ondelete = 'SET NULL'
 db.Project.projectOwner.label = "Owner"
+db.Project.projectOwner.writable = False
+db.Project.roles.readable = False
+db.Project.roles.writable = False
 db.Project.shortDesc.label = "Short Description"
 db.Project.longDesc.label = "Long Description"
 db.Project.projectActive.label = "Active"
+db.Project.unlisted.label = 'Unlisted'
 
 db.define_table('Contact',
                 Field('fromUser', 'reference auth_user', default=auth.user_id),
@@ -85,7 +101,11 @@ db.define_table('Contact',
 db.define_table('Role',
                 Field('name', 'string', default = 'Role'),
                 Field('project', 'reference Project'),                                
-                Field('applicant', 'reference auth_user', default=None),                                
+                Field('applicant', 'reference auth_user', default=None, requires=IS_EMPTY_OR(IS_IN_DB(db, db.auth_user.id))),                                
                 Field('shortDesc', 'string', default = ''),
                 Field('longDesc', 'text', default = ''),
                 )
+db.Role.project.readable = False
+db.Role.project.writable = False
+db.Role.shortDesc.label = "Short Description"
+db.Role.longDesc.label = "Long Description"

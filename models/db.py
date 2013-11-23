@@ -43,6 +43,16 @@ from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
 
+def getFullName(r):
+    return r.first_name + " " + r.last_name
+# Extension of auth_user
+auth.settings.extra_fields[auth.settings.table_user_name] = [Field('unlisted', 
+                                                                   'boolean', 
+                                                                   default = True, 
+                                                                   label = 'Unlisted'
+                                                                   )
+                                                             ]
+
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 

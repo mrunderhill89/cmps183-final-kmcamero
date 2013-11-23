@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title></title>
+
+  
+</head><body>
+{{extend 'layout.html'}}
+<h1>Browse Profiles</h1>
+<p>Here you can browse the profiles of users who have chosen to make themselves public.</p>
+<p>You can search for users with a specific name, skillset, or project that they're currently working on, 
+as well as what groups they belong to. (For example, a group might consist of users who are currently
+unemployed, or students who are in a particular class.)</p>
+
+</body></html>

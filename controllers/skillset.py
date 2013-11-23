@@ -13,10 +13,17 @@ def index():
                     ,editable = False
                     ,deletable = False
                     ,links = [dict(header=T('Actions'), 
-                                       body = lambda r: A('Edit', _class='btn', _href = URL('skillset', 'editSkill', args = [r.id]))
+                                       body = skillEditButtons
                                        )]
                     )
     return dict(owned = owned)
+
+def skillEditButtons(r):
+    edit = A('Edit', _class='btn', _href = URL('skillset', 'editSkill', args = [r.id]))
+    promote = ""
+    if (canPromote(r.skill,r.score)):
+        promote = A('Promote', _class='btn', _href = URL('skillset', 'promote', args = [r.id]))
+    return edit + promote
 
 def getAvailableRanks(score):
     aranks = []
@@ -25,6 +32,16 @@ def getAvailableRanks(score):
         if (score >= minScore or minScore < 0):
             aranks.append(rank)
     return aranks
+
+def getHighestRank(score):
+    highest = None
+    for rank in getAvailableRanks(score):
+        if (highest is None or skillRanks[rank][0] > skillRanks[highest][0]):
+           highest = rank
+    return highest 
+
+def canPromote(rank,score):
+    return (rank != getHighestRank(score))
 
 def is_rejected_skill(form):
     sDB = db.Skill
@@ -83,6 +100,17 @@ def editSkill():
         session.flash = 'Skill Updated.'
         redirect(URL('skillset', 'index'))
     return dict(form = form)
+
+def promote():
+    my_record = db.SkillInstance(request.args(0))
+    if my_record is None: 
+        session.flash = 'Invalid promote request.'
+    else:
+        highest = getHighestRank(my_record.score)
+        my_record.update_record(skillRank = highest)
+        session.flash = 'Skill promoted to '+highest
+    redirect(URL('skillset', 'index'))    
+    return dict()
 """
 projects: Allows the user to view, add, edit, and delete their own projects.
     Subpages:

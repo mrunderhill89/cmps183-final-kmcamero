@@ -7,10 +7,13 @@
   
 </head><body>
 {{extend 'layout.html'}}
-<h1>Projects Menu</p1>
-<h2>Active Projects</h2>
-{{=owned}}
-{{=A('Add a Project...', _href=URL('projects','add'), _class='btn')}}
-<h2>Active Roles</h2>
-<p>Not implemented yet...</p>
+<h1>{{=name}}</h1>
+<h2>Skillset</h2>
+{{=skillset}}
+<h2>Roles</h2>
+{{=roles}}
+<h2>Projects</h2>
+{{=projects}}
+<h2>Contact Information</h2>
+{{=contact}}
 </body></html>

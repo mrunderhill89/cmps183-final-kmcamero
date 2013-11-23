@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title></title>
+
+  
+  
+  <style type="text/css"></style>
+</head><body>
+{{extend 'layout.html'}}
+<div id="profile_body"><br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td colspan="3" rowspan="1" style="vertical-align: top;">
+      <div id="profile_head">
+<h1>{{=user.first_name}} {{=user.last_name}}</h1>
+      </div>
+
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Skills:<br>
+{{=skills}}<br>
+      </td>
+      <td style="vertical-align: top;">Current Projects:<br>
+      </td>
+      <td style="vertical-align: top;">Contact Information:<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Employment/Class Status:<br>
+      </td>
+      <td style="vertical-align: top;">Previous Projects:<br>
+      </td>
+      <td style="vertical-align: top;">Other Information:<br>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" rowspan="1" style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+</div>
+
+</body></html>
