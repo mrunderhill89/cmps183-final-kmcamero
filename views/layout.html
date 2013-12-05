@@ -69,23 +69,50 @@
   <!-- Navbar ================================================== -->
   <div class="navbar navbar-inverse">
     <div class="flash">{{=response.flash or ''}}</div>
-    <div class="navbar-inner">
-      <div class="container">
-        {{is_mobile=request.user_agent().is_mobile}}
-        <!-- the next tag is necessary for bootstrap menus, do not remove -->
-        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse" style="{{='display:none;' if not is_mobile else ''}}">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        {{=response.logo or ''}}
-        <ul id="navbar" class="nav pull-right">{{='auth' in globals() and auth.navbar(mode="dropdown") or ''}}</ul>
-        <div class="{{='nav-collapse' if is_mobile else 'nav'}}">
-          {{if response.menu:}}
-          {{=MENU(response.menu, _class='mobile-menu nav' if is_mobile else 'nav',mobile=is_mobile,li_class='dropdown',ul_class='dropdown-menu')}}
-          {{pass}}
-        </div><!--/.nav-collapse -->
-      </div>
+	<div class="navbar-inner">
+		<div class="container"><!-- the next tag is necessary for bootstrap menus, do not remove --><button
+		type="button" class="btn btn-navbar" data-toggle="collapse"
+		data-target=".nav-collapse" style="display: none;"> <span
+		class="icon-bar"></span> <span class="icon-bar"></span> <span
+		class="icon-bar"></span> </button> <a class="brand"
+		data-w2p_disable_with="default" href="http://www.web2py.com/"><b>web<span>2</span>py</b>™&nbsp;</a>
+		<ul id="navbar" class="nav pull-right">
+			<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle"
+			data-w2p_disable_with="default" href="#" rel="nofollow">Welcome Kevin</a>
+			<ul class="dropdown-menu">
+				<li><a data-w2p_disable_with="default"
+				href="/cmps183_final_kmcamero/default/user/profile?_next=/cmps183_final_kmcamero/default/index"
+				rel="nofollow"> Profile</a></li>
+				<li><a data-w2p_disable_with="default"
+				href="/cmps183_final_kmcamero/default/user/change_password?_next=/cmps183_final_kmcamero/default/index"
+				rel="nofollow"> Password</a></li>
+				<li class="divider"><br>
+				</li>
+				<li><a data-w2p_disable_with="default"
+				href="/cmps183_final_kmcamero/default/user/logout?_next=/cmps183_final_kmcamero/default/index"
+				rel="nofollow"> Logout</a></li>
+			</ul>
+			</li>
+		</ul>
+		<div class="nav">
+			<ul class="nav">
+			<li class="web2py-menu-first"><a data-w2p_disable_with="default"
+			href="{{=URL('default','index')}}">Home</a></li>
+			<li class="web2py-menu-first"><a data-w2p_disable_with="default"
+			href="{{=URL('browse','browse_users')}}">Browse Users</a></li>
+			<li class="web2py-menu-first"><a data-w2p_disable_with="default"
+			href="{{=URL('browse','browse_projects')}}">Browse Projects</a></li>
+			<li class="web2py-menu-first"><a data-w2p_disable_with="default"
+			href="{{=URL('skillset','index')}}">Skillset</a></li>
+			<li class="web2py-menu-first"><a data-w2p_disable_with="default"
+			href="{{=URL('projects','index')}}">Projects</a></li>
+			<li class="web2py-menu-first"><a data-w2p_disable_with="default"
+			href="{{=URL('reviews','index')}}">Reviews</a></li>
+			</ul>
+		</div>
+		<!--/.nav-collapse -->
+		</div>
+	</div>
     </div>
   </div><!--/top navbar -->
 

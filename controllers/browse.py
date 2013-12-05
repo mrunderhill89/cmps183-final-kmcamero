@@ -54,7 +54,43 @@ def view_user():
                         ,user_signature = False
                         ,links = []
                         )
+    rDB = db.Role
+    q = (rDB.holder == user.id)
+    activeProjects = SQLFORM.grid(q
+                        ,searchable = True
+                        ,fields=[iDB.skill, iDB.skillRank, iDB.score, iDB.reviews]
+                        ,csv = False
+                        ,details = False
+                        ,create = False
+                        ,editable = False
+                        ,deletable = False
+                        ,user_signature = False
+                        ,links = []
+                        )
+
     return dict(user=user, skills=skills)
+
+def view_project():
+    project = db.Project(request.args(0))
+    owner = db.auth_user(project.projectOwner) or None
+    rDB = db.Role
+    q = (rDB.project == project)
+    if (db(q).count() > 0):
+        roles = SQLFORM.grid(q
+                            ,searchable = True
+                            ,fields=[rDB.name, rDB.shortDesc, rDB.holder]
+                            ,csv = False
+                            ,details = False
+                            ,create = False
+                            ,editable = False
+                            ,deletable = False
+                            ,user_signature = False
+                            ,links = []
+                            )
+    else:
+        roles = "No roles found for this project."
+    return dict(project=project, owner=owner, roles=roles)
+
 
 def browse_projects():
     proj = db.Project

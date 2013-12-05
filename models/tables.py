@@ -56,6 +56,15 @@ db.define_table('Review',
                 Field('impact', 'integer', default=1),
                 Field('feedback', 'text'),
                 )
+def getUserNameOrAnon(name, row):
+    if (row.anonymous):
+        return "Anonymous"
+    user = db.auth_user(name)
+    if (user is None):
+        return "Unrecognized"
+    return user.first_name + " " + user.last_name
+
+db.Review.sender.represent = getUserNameOrAnon
 
 # Data for handling projects and roles.
 #
@@ -66,7 +75,7 @@ def getTotalRoles(r):
 
 def getFilledRoles(r):
     roles = db.Role
-    q = ((roles.project == r) & (roles.applicant != None))
+    q = ((roles.project == r) & (roles.holder != None))
     return db(q).count()
 
 db.define_table('Project',
@@ -91,21 +100,22 @@ db.Project.unlisted.label = 'Unlisted'
 db.define_table('Contact',
                 Field('fromUser', 'reference auth_user', default=auth.user_id),
                 Field('toUser', 'reference auth_user', default = None),
-                Field('reviews', 'list:reference Review', default = []),
-                Field('relationship', 'string', default='Acquaintance'),
                 Field('accepted', 'boolean', default = False),
-                Field('blocked', 'boolean', default = False),
-                Field('reciprocal', 'reference Contact', default = None)                
+                Field('blocked', 'boolean', default = False)
                 )
+
+def getProjectName(name, row):
+    return db.Project(name) or 'Unrecognized'
 
 db.define_table('Role',
                 Field('name', 'string', default = 'Role'),
                 Field('project', 'reference Project'),                                
-                Field('applicant', 'reference auth_user', default=None, requires=IS_EMPTY_OR(IS_IN_DB(db, db.auth_user.id))),                                
+                Field('holder', 'reference auth_user', default=None, requires=IS_EMPTY_OR(IS_IN_DB(db, db.auth_user.id))),                                
+                Field('applicants', 'list:reference auth_user', default = []),
                 Field('shortDesc', 'string', default = ''),
                 Field('longDesc', 'text', default = ''),
                 )
-db.Role.project.readable = False
+db.Role.project.represent = getProjectName
 db.Role.project.writable = False
 db.Role.shortDesc.label = "Short Description"
 db.Role.longDesc.label = "Long Description"

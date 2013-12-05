@@ -1,6 +1,6 @@
 def index():
     t = db.Contact
-    #Get grid of projects owned by user
+    #Get grid of the user's contacts
     q = ((auth.user.id == t.fromUser) | (auth.user.id == t.toUser))
     form = SQLFORM.grid(q
                     ,searchable = True
@@ -12,17 +12,3 @@ def index():
                     ,deletable = False
                     )
     return dict(form= form)
-
-def add():
-    return dict()
-
-def addByEmail():
-    form = SQLFORM.factory(
-                            Field('email', requires=IS_NOT_EMPTY()),
-                            Field('relationship', requires=IS_NOT_EMPTY())
-                           )
-    if form.process().accepted:
-        session.flash = 'Contact posted'
-        redirect(URL('contacts', 'index'))
-    return dict(form = form)
-

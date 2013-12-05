@@ -8,5 +8,9 @@
 </head><body>
 {{extend 'layout.html'}}
 <h1>Reviews Menu</h1>
-<p>Here you will be able to see whose skills you've reviewed so far, as well as a rolling list of contacts and skills that you have not reviewed yet.</p>
+<h2>Your Reviews</h2>
+{{=rFrom}}
+<h2>Reviews You Have Given</h2>
+{{=rTo}}
+{{=A('Add Review', _href=URL('reviews','selectContact'), _class="btn")}}
 </body></html>
