@@ -98,8 +98,8 @@ db.Project.projectActive.label = "Active"
 db.Project.unlisted.label = 'Unlisted'
 
 db.define_table('Contact',
-                Field('fromUser', 'reference auth_user', default=auth.user_id),
-                Field('toUser', 'reference auth_user', default = None),
+                Field('sender', 'reference auth_user', default=auth.user_id),
+                Field('receiver', 'reference auth_user', default = None),
                 Field('accepted', 'boolean', default = False),
                 Field('blocked', 'boolean', default = False)
                 )

@@ -30,7 +30,10 @@ def browse_users():
 
 def getUserBrowseActions(r):
     view = A('View', _class='btn', _href = URL('browse', 'view_user', args = [r.id], user_signature = False))
-    return view
+    contact = ""
+    if (auth.user.id != r.id):
+        contact = A('Add Contact', _class='btn', _href = URL('contacts', 'add', args = [r.id], user_signature = True))
+    return view + contact
 
 def getProjectBrowseActions(r):
     view = A('View', _class='btn', _href = URL('browse', 'view_project', args = [r.id]))
