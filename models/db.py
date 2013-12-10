@@ -49,7 +49,7 @@ auth.settings.extra_fields[auth.settings.table_user_name] = [Field('unlisted',
                                                                    default = True, 
                                                                    label = 'Unlisted'
                                                                    )
-                                                             ,Field('contacts', 
+                                                             ,Field('roles', 
                                                                     'list:reference Role'
                                                                     )
                                                              ]
